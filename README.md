@@ -1,5 +1,7 @@
 # Game of Life in [Ada](https://www.adaic.org/)
 
+![thumbnail](thumbnail.png)
+
 Simple Game of Life implementation in Ada.
 
 ## Quick Code
