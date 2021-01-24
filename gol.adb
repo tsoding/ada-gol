@@ -3,8 +3,8 @@ with Ada.Text_IO;
 procedure Gol is
     use Ada.Text_IO;
 
-    Width  : constant Positive := 20;
-    Height : constant Positive := 10;
+    Width  : constant Positive := 5;
+    Height : constant Positive := 5;
 
     type Cell is (Dead, Alive);
     type Rows is mod Height;
