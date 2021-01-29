@@ -16,4 +16,4 @@ $ ./gol
 ## Screencast
 | Thumbnail | Link |
 | --- | --- |
-| [![thumbnail](http://i3.ytimg.com/vi/qJAuyoDt03A/default.jpg)](https://www.youtube.com/watch?v=qJAuyoDt03A) | [Programming in Ada — Part 1](https://www.youtube.com/watch?v=qJAuyoDt03A) |
+| [![thumbnail](http://i3.ytimg.com/vi/qJAuyoDt03A/default.jpg)](https://www.youtube.com/watch?v=qJAuyoDt03A) | [Game of Life in Ada](https://www.youtube.com/watch?v=qJAuyoDt03A) |
