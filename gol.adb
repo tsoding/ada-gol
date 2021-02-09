@@ -1,10 +1,12 @@
+with Ada.Characters.Latin_1; -- There's also 'with ASCII;', but that's obsolete
+with Ada.Strings.Fixed;
 with Ada.Text_IO;
 
 procedure Gol is
     use Ada.Text_IO;
 
-    Width  : constant Positive := 5;
-    Height : constant Positive := 5;
+    Width  : constant := 5; -- named number, compatible with all integer types
+    Height : constant := 5;
 
     type Cell is (Dead, Alive);
     type Rows is mod Height;
@@ -13,13 +15,12 @@ procedure Gol is
     type Neighbors is range 0 .. 8;
 
     procedure Render_Board(B: Board) is
+       -- conversion array, a common pattern/idiom in Ada
+       Cell_Symbol : constant array(Cell) of Character := (Alive => '#', Dead => '.');
     begin
-        for Row in Rows loop
-            for Col in Cols loop
-                case B(Row, Col) is
-                    when Alive => Put('#');
-                    when Dead  => Put('.');
-                end case;
+        for Row in B'Range(1) loop -- 'Range(1) -> range of first dimension
+            for Col in B'Range(2) loop -- 'Range(2) -> range of second dimension
+                Put( Cell_Symbol(B(Row, Col)) );
             end loop;
             New_Line;
         end loop;
@@ -48,17 +49,16 @@ procedure Gol is
     function Next(Current : Board) return Board is
     begin
         return Result : Board do
-            for Row in Rows loop
-                for Col in Cols loop
+            for Row in Board'Range(1) loop
+                for Col in Board'Range(2) loop 
                     declare
                         N : Neighbors := Count_Neighbors(Current, Row, Col);
                     begin
-                        case Current(Row, Col) is
-                            when Dead  => 
-                                Result(Row, Col) := (if N = 3 then Alive else Dead);
-                            when Alive => 
-                                Result(Row, Col) := (if N in 2 .. 3 then Alive else Dead);
-                        end case; 
+                        -- case expression is useful in these situations
+                        Result(Row, Col) := 
+                            (case Current(Row, Col) is
+                             when Dead  => (if N = 3 then Alive else Dead),
+                             when Alive => (if N in 2 .. 3 then Alive else Dead));
                     end;
                 end loop;
             end loop;
@@ -76,8 +76,8 @@ begin
     loop
         Render_Board(Current);
         Current := Next(Current);
-        delay Duration(0.25);
-        Put(Character'Val(27) & "[" & Height'Image & "A");
-        Put(Character'Val(27) & "[" & Width'Image & "D");
+        delay 0.25;
+        Put(Ada.Characters.Latin_1.ESC & "[" & Ada.Strings.Fixed.Trim(Height'Image, Ada.Strings.Left) & "A");
+        Put(Ada.Characters.Latin_1.ESC & "[" & Ada.Strings.Fixed.Trim(Width'Image, Ada.Strings.Left) & "D");
     end loop;
 end;
