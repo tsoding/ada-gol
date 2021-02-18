@@ -34,8 +34,8 @@ procedure Gol is
                 for Delta_Col in Cols range 0 .. 2 loop
                     if Delta_Row /= 1 or Delta_Col /= 1 then
                         declare
-                            Row : Rows := Row0 + Delta_Row - 1;
-                            Col : Cols := Col0 + Delta_Col - 1;
+                            Row : constant Rows := Row0 + Delta_Row - 1;
+                            Col : constant Cols := Col0 + Delta_Col - 1;
                         begin
                             if B(Row, Col) = Alive then
                                 Result := Result + 1;
@@ -53,7 +53,7 @@ procedure Gol is
             for Row in Rows loop
                 for Col in Cols loop
                     declare
-                        N : Neighbors := Count_Neighbors(Current, Row, Col);
+                        N : constant Neighbors := Count_Neighbors(Current, Row, Col);
                     begin
                         case Current(Row, Col) is
                             when Dead  => 
