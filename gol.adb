@@ -1,4 +1,6 @@
 with Ada.Text_IO;
+with Ada.Characters.Latin_1; -- There's also 'with ASCII;', but that's obsolete
+with Ada.Strings.Fixed;
 
 procedure Gol is
     use Ada.Text_IO;
@@ -77,7 +79,7 @@ begin
         Render_Board(Current);
         Current := Next(Current);
         delay Duration(0.25);
-        Put(Character'Val(27) & "[" & Height'Image & "A");
-        Put(Character'Val(27) & "[" & Width'Image & "D");
+	Put(Ada.Characters.Latin_1.ESC & "[" & Ada.Strings.Fixed.Trim(Height'Image, Ada.Strings.Left) & "A");
+        Put(Ada.Characters.Latin_1.ESC & "[" & Ada.Strings.Fixed.Trim(Width'Image, Ada.Strings.Left) & "D");
     end loop;
 end;
